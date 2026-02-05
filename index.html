@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Sonia 💘</title>
+
+<style>
+  body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff4d4d, #ff1a1a);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  h1 {
+    color: #fff0f5;
+    font-size: 2.8em;
+    margin-bottom: 30px;
+    z-index: 2;
+    position: relative;
+  }
+
+  .buttons {
+    margin-top: 20px;
+    z-index: 2;
+    position: relative;
+  }
+
+  button {
+    padding: 15px 30px;
+    font-size: 1.4em;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 10px;
+    transition: transform 0.3s ease;
+    z-index: 2;
+    position: relative;
+  }
+
+  #yesBtn {
+    background-color: #ff66b3;
+    color: white;
+  }
+
+  #noBtn {
+    background-color: #ddd;
+    color: #444;
+  }
+
+  /* Roses */
+  .rose {
+    position: absolute;
+    font-size: 24px;
+    animation: fall 3s linear forwards;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* Shake du bouton */
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-10px); }
+    80% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+  }
+
+  .shake {
+    animation: shake 0.5s;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>💌 Sonia, veux-tu être ma Valentine ? 💌</h1>
+
+<div class="buttons">
+  <button id="yesBtn" onclick="yes()">Oui 💖</button>
+  <button id="noBtn" onclick="no()">Non 🙃</button>
+</div>
+
+<script>
+  let scale = 1;
+  let clickCount = 0;
+
+  const messages = [
+    "Oui 💖",
+    "Tu as cliqué non par erreur 😅",
+    "S'il te plaît 😭",
+    "Je suis à genou 🙇‍♂️",
+    "Sonia, regarde comme je t'aime 💘",
+    "Dis oui et je souris toute l'année 😊",
+    "Allez Sonia… juste oui 😍"
+  ];
+
+  const yesBtn = document.getElementById("yesBtn");
+
+  function no() {
+    clickCount++;
+
+    // Agrandir le bouton Oui
+    scale += 0.35;
+    yesBtn.style.transform = `scale(${scale})`;
+
+    // Petit shake
+    yesBtn.classList.remove("shake"); 
+    void yesBtn.offsetWidth; 
+    yesBtn.classList.add("shake");
+
+    // Changer texte
+    if (clickCount < messages.length) {
+      yesBtn.innerText = messages[clickCount];
+    }
+  }
+
+  function yes() {
+    // Explosion de roses : 10000 roses et 10000 coeurs rouges sur toute la page
+    for(let i=0;i<100;i++){
+      createRose();
+    }
+
+    // Shake final
+    yesBtn.classList.add("shake");
+
+    // Après 2 secondes, ouvrir WhatsApp
+    setTimeout(()=>{
+      const phoneNumber = "22898872908"; // ton numéro WhatsApp
+      const message = encodeURIComponent("Oui, je veux être ta Valentine ❤️"); 
+      window.location.href = `https://wa.me/${phoneNumber}?text=${message}`;
+    }, 2000);
+  }
+
+  function createRose() {
+    const elem = document.createElement("div");
+    elem.className = "rose";
+    elem.innerText = "🌹";
+    elem.style.left = Math.random() * window.innerWidth + "px";
+    elem.style.top = Math.random() * window.innerHeight + "px"; // départ aléatoire sur toute la page
+    elem.style.fontSize = (20 + Math.random()*30) + "px"; // tailles variées
+    document.body.appendChild(elem);
+    setTimeout(()=>elem.remove(),3000);
+  }
+</script>
+
+</body>
+  </html>
